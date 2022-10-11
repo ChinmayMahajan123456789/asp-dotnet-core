@@ -4,6 +4,8 @@ on:
   push: 
     branches:
       - main
+  workflow_dispatch:
+    
 env: 
   DOTNET_VERSION: 6.0.X
 
@@ -24,3 +26,12 @@ jobs:
 
       - name: build app
         run: dotnet build -c Release --no-restore
+
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{ env.DOTNET_ROOT }}/myapp
+
+        - name: upload artifact 
+          uses: actions/upload-artifact@main
+          with: 
+            name: .net-app
+            path: ${{ env.DOTNET_ROOT }}/myapp
