@@ -1,0 +1,26 @@
+name: continuous integration
+
+on:
+  push: 
+    branches:
+      - main
+env: 
+  DOTNET_VERSION: 6.0.X
+
+jobs:
+  build: 
+    runs-on: windows-latest
+    steps:
+      - name: checkout out code
+        uses: actions/checkout@main
+
+      - name: set up dotnet 6
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION}}
+      
+      - name: download dependencies
+        run: dotnet restore
+
+      - name: build app
+        run: dotnet build -c Release --no-restore
