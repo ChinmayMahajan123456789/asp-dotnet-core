@@ -28,7 +28,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION}}
       
       - name: set up dependency caching for faster build
-        uses: action/cache@main
+        uses: action/cache@v3
         with: 
           path: ~/.nuget/packages
           key:  ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.jason') }}
