@@ -27,18 +27,23 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION}}
       
-      - name: download dependencies
-        run: dotnet restore
+      - name: set up dependency caching for faster build
+        uses: action/cache@main
+        with: 
+          path: ~/.nuget/packages
+          key:  ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.jason') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: build app
         run: dotnet build -c Release --no-restore
 
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{ env.PUBLISH_PATH }}/myapp
+        run: dotnet publish -c Release -o ${{ env.PUBLISH_PATH }}
 
       - name: upload artifact 
         uses: actions/upload-artifact@main
         with: 
           name: .net-app
-          path: ${{ env.PUBLISH_PATH }}/myapp
+          path: ${{ env.PUBLISH_PATH }}
