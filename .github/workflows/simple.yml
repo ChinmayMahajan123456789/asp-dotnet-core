@@ -8,6 +8,7 @@ on:
     
 env: 
   DOTNET_VERSION: '6.0.x'
+  PUBLISH_PATH: '.'
   
 jobs:
   build: 
@@ -34,10 +35,10 @@ jobs:
 
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{ env.DOTNET_ROOT }}/myapp
+        run: dotnet publish -c Release -o ${{ env.PUBLISH_PATH }}/myapp
 
       - name: upload artifact 
         uses: actions/upload-artifact@main
         with: 
           name: .net-app
-          path: ${{ env.DOTNET_ROOT }}/myapp
+          path: ${{ env.PUBLISH_PATH }}/myapp
