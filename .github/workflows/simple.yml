@@ -8,11 +8,15 @@ on:
     
 env: 
   DOTNET_VERSION: '6.0.x'
-  PUBLISH_PATH: './myapp'
-
+  
 jobs:
   build: 
     runs-on: windows-latest
+
+    defaults:
+      run: 
+        working-directory: asp-dotnet-core
+
     steps:
       - name: checkout out code
         uses: actions/checkout@main
